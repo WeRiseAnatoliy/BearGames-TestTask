@@ -30,6 +30,7 @@ namespace TestTask.Game.Characters
 
             var speed = SpeedByMagnitude.Evaluate(direction.magnitude);
             rbody.velocity = direction * speed;
+            View.SetMoving(direction.x * speed);
         }
 
         public void Attack()
