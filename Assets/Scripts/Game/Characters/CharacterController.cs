@@ -10,6 +10,10 @@ namespace TestTask.Game.Characters
         [Inject, ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         public IHealthController Health { get; private set; }
 
+        [Inject, ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
+        public ICharacterView View { get; private set; }
+
+
         public StateMachine<CharacterStateType> States;
 
         public override void InstallBindings()
@@ -29,6 +33,13 @@ namespace TestTask.Game.Characters
             Health.WasDead.OnValueChanged += OnDeadChanged;
         }
 
+        protected virtual void Update ()
+        {
+            //I know, it's bad, but something wrong with State Machine library. State update is not called
+            if (States != null && States.State == CharacterStateType.Live)
+                Live_Update();
+        }
+
         private void OnDeadChanged(bool old, bool now)
         {
             if (now)
@@ -44,7 +55,10 @@ namespace TestTask.Game.Characters
             UnityEngine.Debug.Log("Live enter");
         }
 
-        protected abstract void Live_Update();
+        protected virtual void Live_Update()
+        {
+            UnityEngine.Debug.Log("Live update");
+        }
 
         protected virtual void Dead_Enter()
         {

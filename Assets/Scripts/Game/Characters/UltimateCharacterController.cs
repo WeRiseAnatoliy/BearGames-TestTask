@@ -2,8 +2,11 @@
 
 namespace TestTask.Game.Characters
 {
-    public class LocomotionCharacterController : CharacterController, ILocomotionCharacterController
+    public class UltimateCharacterController : CharacterController, IUltimateCharacterController
     {
+        [SerializeField] bool canMove = true;
+
+        public bool CanMove { get => CanMove; set => canMove = value; }
         public AnimationCurve SpeedByMagnitude = AnimationCurve.Linear(0, 0, 1, 1);
 
         private Collider2D charCollider;
@@ -22,10 +25,16 @@ namespace TestTask.Game.Characters
 
         public void Move(Vector3 direction)
         {
+            if (canMove == false)
+                return;
+
             var speed = SpeedByMagnitude.Evaluate(direction.magnitude);
             rbody.velocity = direction * speed;
         }
 
-        protected override void Live_Update() { }
+        public void Attack()
+        {
+            
+        }
     }
 }
