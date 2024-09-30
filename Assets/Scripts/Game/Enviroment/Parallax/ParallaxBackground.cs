@@ -5,27 +5,32 @@ namespace TestTask.Game.Enviroment
 {
     public class ParallaxBackground : MonoBehaviour
     {
-        [SerializeField] ParallaxFollowTarget followTarget;
+        [SerializeField] AnimationCurve layerSpeedFactor = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        private List<ParallaxLayer> layers = new List<ParallaxLayer>();
+        private List<IParallaxLayer> layers = new List<IParallaxLayer>();
+        private Transform followTarget;
+        private Vector3 lastTargetPos;
 
         private void Start()
         {
-            followTarget.OnChangePosition += Move;
-
+            followTarget = Camera.main.transform;
+            lastTargetPos = followTarget.position;
             RefreshLayers();
         }
 
-        private void OnDisable()
+        private void Update()
         {
-            if(followTarget)
-                followTarget.OnChangePosition -= Move;
+            if (followTarget)
+            {
+                Move(lastTargetPos - followTarget.position);
+                lastTargetPos = followTarget.position;
+            }
         }
 
-        private void Move(float deltaX)
+        private void Move(Vector3 delta)
         {
             for(var x = 0; x < layers.Count; x++)
-                layers[x].Move(deltaX);
+                layers[x].Move(delta);
         }
 
         public void RefreshLayers ()
@@ -33,8 +38,10 @@ namespace TestTask.Game.Enviroment
             layers.Clear();
 
             for(var x = 0; x < transform.childCount; x++)
-                if(transform.GetChild(x).TryGetComponent<ParallaxLayer>(out var layer))
-                    layers.Add(layer);
+            {
+                var percent = x / (float)transform.childCount;
+                layers.Add(new ParallaxLayer(transform.GetChild(x).gameObject, layerSpeedFactor.Evaluate(percent)));
+            }
         }
     }
 }

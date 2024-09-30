@@ -6,6 +6,7 @@ namespace TestTask.Game.Characters
     {
         [SerializeField] bool canMove = true;
 
+        public float SpeedMove = 5f;
         public bool CanMove { get => CanMove; set => canMove = value; }
         public AnimationCurve SpeedByMagnitude = AnimationCurve.Linear(0, 0, 1, 1);
 
@@ -29,7 +30,7 @@ namespace TestTask.Game.Characters
                 return;
 
             var speed = SpeedByMagnitude.Evaluate(direction.magnitude);
-            rbody.velocity = direction * speed;
+            rbody.velocity = direction * speed * SpeedMove; 
             View.SetMoving(direction.x * speed);
         }
 
