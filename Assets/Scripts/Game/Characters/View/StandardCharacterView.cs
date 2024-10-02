@@ -8,6 +8,8 @@ namespace TestTask.Game.Characters
         [SerializeField] Animator animator;
         [SerializeField] string movingParam = "moving";
 
+        public Transform Root => animator.transform;
+
         public override void InstallBindings()
         {
             Container.
@@ -15,6 +17,11 @@ namespace TestTask.Game.Characters
                 FromInstance(this).
                 AsCached().
                 NonLazy();
+        }
+
+        public bool IsCurrentPlay(string nodeName, int layer = 0)
+        {
+            return animator.GetCurrentAnimatorStateInfo(layer).IsName(nodeName);
         }
 
         public void PlayClip(string nodeName, int layer = 0)

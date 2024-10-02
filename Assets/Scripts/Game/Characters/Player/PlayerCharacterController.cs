@@ -2,11 +2,17 @@
 
 namespace TestTask.Game.Characters
 {
-    public class PlayerCharacterController : UltimateCharacterController
+    public class PlayerCharacterController : TwoDUltimateCharacterController
     {
         protected override void Live_Update()
         {
-            Move(Vector3.right * Input.GetAxis("Horizontal"));
+            if(View.IsCurrentPlay("Attack") == false)
+            {
+                Move(Vector3.right * Input.GetAxis("Horizontal"));
+
+                if (Input.GetMouseButtonDown(0))
+                    Attack();
+            }
         }
     }
 }

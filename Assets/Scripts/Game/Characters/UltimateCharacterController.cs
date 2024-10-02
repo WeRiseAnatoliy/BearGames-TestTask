@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace TestTask.Game.Characters
 {
@@ -7,36 +8,27 @@ namespace TestTask.Game.Characters
         [SerializeField] bool canMove = true;
 
         public float SpeedMove = 5f;
-        public bool CanMove { get => CanMove; set => canMove = value; }
+
+        [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
+        public bool CanMove { get => canMove; set => canMove = value; }
         public AnimationCurve SpeedByMagnitude = AnimationCurve.Linear(0, 0, 1, 1);
 
-        private Collider2D charCollider;
-        private Rigidbody2D rbody;
+        [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
+        public Vector3 Velocity { get; private set; }
 
-        public Vector3 Velocity =>
-            rbody ? rbody.velocity : Vector3.zero;
-
-        public override void Start()
-        {
-            base.Start();
-
-            charCollider = GetComponent<Collider2D>();
-            rbody = GetComponent<Rigidbody2D>();
-        }
-
-        public void Move(Vector3 direction)
+        public virtual void Move(Vector3 direction)
         {
             if (canMove == false)
                 return;
 
             var speed = SpeedByMagnitude.Evaluate(direction.magnitude);
-            rbody.velocity = direction * speed * SpeedMove; 
-            View.SetMoving(direction.x * speed);
+            Velocity = direction * speed;
+            View.SetMoving(Mathf.Abs(direction.x) * speed);
         }
 
         public void Attack()
         {
-            
+            View.PlayClip("Attack");
         }
     }
 }

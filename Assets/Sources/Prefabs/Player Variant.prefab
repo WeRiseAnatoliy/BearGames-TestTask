@@ -94,6 +94,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8189669107414641102}
     m_Modifications:
+    - target: {fileID: -8792691634573511403, guid: 70167b2b744e43e42b99fe0a51ca1f6e,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70167b2b744e43e42b99fe0a51ca1f6e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -319,7 +324,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _monoInstallers.Array.data[2]
       value: 
-      objectReference: {fileID: 1500223381956680922}
+      objectReference: {fileID: 7728048837603747990}
     - target: {fileID: 7674047111396074456, guid: 6030a853ea43e0a41a437b8c573deaeb,
         type: 3}
       propertyPath: animator
@@ -346,7 +351,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7703301638441151713, guid: 6030a853ea43e0a41a437b8c573deaeb,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1500223381956680922}
+      addedObject: {fileID: 7728048837603747990}
   m_SourcePrefab: {fileID: 100100000, guid: 6030a853ea43e0a41a437b8c573deaeb, type: 3}
 --- !u!1 &1565986390163517951 stripped
 GameObject:
@@ -354,7 +359,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9177245692537789726}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1500223381956680922
+--- !u!114 &7728048837603747990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
