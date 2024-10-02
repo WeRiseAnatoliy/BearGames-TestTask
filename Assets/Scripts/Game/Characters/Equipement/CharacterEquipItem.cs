@@ -55,7 +55,6 @@ namespace TestTask.Game.Characters
                 targetsMask);
             if (hit && hit.collider)
             {
-                Debug.Log($"Contact with: {hit.collider.name}");
                 if(hit.collider.transform.TryGetComponent<RaycastTargetTransfer>(out var transfer))
                 {
                     if(transfer.NextObject.TryGetComponent<IHealthController>(out var health))

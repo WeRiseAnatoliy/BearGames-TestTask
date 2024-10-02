@@ -36,8 +36,13 @@ namespace TestTask.Game.Characters
 
         protected virtual void OnHealthChanged(float old, float current)
         {
-            if (current < old)
-                View.PlayClip("Hit");
+            if (current > 0)
+            {
+                if (current < old)
+                    View.PlayClip("Hit");
+            }
+            else
+                View.PlayClip("Dead");
         }
 
         protected virtual void Update ()

@@ -11248,6 +11248,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1266902537 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8189669107414641102, guid: 5096636f955255249b1a14d9fb49f997,
+    type: 3}
+  m_PrefabInstance: {fileID: 1993447410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1267894389
 GameObject:
   m_ObjectHideFlags: 0
@@ -25298,11 +25304,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8793017599362682038, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793017599362682038, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793017599362682038, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4967083317554521847, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1993447420}
   m_SourcePrefab: {fileID: 100100000, guid: 5096636f955255249b1a14d9fb49f997, type: 3}
+--- !u!1 &1993447411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4967083317554521847, guid: 5096636f955255249b1a14d9fb49f997,
+    type: 3}
+  m_PrefabInstance: {fileID: 1993447410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1818360608 &1993447420
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993447411}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: -1, z: 0}
+  m_TranslationOffset: {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1266902537}
+    weight: 1
 --- !u!1 &1994999845
 GameObject:
   m_ObjectHideFlags: 0

@@ -178,6 +178,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89e6f1e61b1f8748a9381471fbf74b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8282499044764192777}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9106110667583088776}
+        m_TargetAssemblyTypeName: UnityEngine.Rigidbody2D, UnityEngine
+        m_MethodName: set_isKinematic
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   _health:
     _value: 10
   _wasDead:
@@ -207,6 +234,7 @@ GameObject:
   - component: {fileID: 4425248732527715946}
   - component: {fileID: 3526140956608871387}
   - component: {fileID: 807636154294588132}
+  - component: {fileID: 3106616841709473191}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -284,3 +312,16 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
+--- !u!114 &3106616841709473191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282499044764192777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abfe03ffa835b418733ad08c45b305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextObject: {fileID: 1079646734138897616}

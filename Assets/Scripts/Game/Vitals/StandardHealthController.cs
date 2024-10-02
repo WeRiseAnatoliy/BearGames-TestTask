@@ -1,5 +1,6 @@
 ﻿using TestTask.Common;
 using UnityEngine;
+using UnityEngine.Events;
 using Zenject;
 
 namespace TestTask.Game.Vitals
@@ -7,6 +8,8 @@ namespace TestTask.Game.Vitals
     public class StandardHealthController : MonoInstaller, IHealthController
     {
         public const float DEFAULT_HP = 10;
+
+        public UnityEvent OnDead;
 
         [SerializeField] ObservedValue<float> _health = new ObservedValue<float>(DEFAULT_HP);
         [SerializeField] ObservedValue<bool> _wasDead = new ObservedValue<bool>();
@@ -31,7 +34,10 @@ namespace TestTask.Game.Vitals
             HandleDamageData(changeData);
 
             if (Health.Value <= 0)
+            {
                 WasDead.Value = true;
+                OnDead?.Invoke();
+            }
         }
 
         protected virtual void HandleDamageData (ChangeHealthData changeData)
