@@ -7,6 +7,7 @@ namespace TestTask.Game.Characters
     {
         [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         private Vector3 startViewRot;
+        private bool lastLookDirRight;
 
         public override void Start()
         {
@@ -17,11 +18,10 @@ namespace TestTask.Game.Characters
 
         public override void Move(Vector3 direction)
         {
-            if (CanMove == false)
-                return;
+            if (Mathf.Abs(direction.x) > 0.1f)
+                lastLookDirRight = direction.x > 0;
 
-            if(Mathf.Abs(direction.x) > 0.1f)
-                SetLookAxis(direction.x > 0);
+            SetLookAxis(lastLookDirRight);
 
             base.Move(direction);
         }
@@ -29,7 +29,6 @@ namespace TestTask.Game.Characters
         protected void SetLookAxis (bool right)
         {
             var y = right ? startViewRot.y : -startViewRot.y;
-            Debug.Log($"Right or left: {right}, y angle {y}");
             View.Root.localEulerAngles = new Vector3(startViewRot.x, y, startViewRot.z);
         }
     }

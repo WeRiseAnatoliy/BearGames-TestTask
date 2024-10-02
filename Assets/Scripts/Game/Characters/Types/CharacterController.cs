@@ -30,7 +30,14 @@ namespace TestTask.Game.Characters
             States = new StateMachine<CharacterStateType>(this);
             States.ChangeState(CharacterStateType.Live);
 
+            Health.Health.OnValueChanged += OnHealthChanged;
             Health.WasDead.OnValueChanged += OnDeadChanged;
+        }
+
+        protected virtual void OnHealthChanged(float old, float current)
+        {
+            if (current < old)
+                View.PlayClip("Hit");
         }
 
         protected virtual void Update ()
@@ -52,12 +59,11 @@ namespace TestTask.Game.Characters
         protected virtual void Live_Enter()
         {
             //for example - disable ragdoll or something else
-            UnityEngine.Debug.Log("Live enter");
         }
 
         protected virtual void Live_Update()
         {
-            UnityEngine.Debug.Log("Live update");
+
         }
 
         protected virtual void Dead_Enter()

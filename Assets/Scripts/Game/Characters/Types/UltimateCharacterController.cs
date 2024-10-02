@@ -16,6 +16,17 @@ namespace TestTask.Game.Characters
         [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         public Vector3 Velocity { get; private set; }
 
+        public override void InstallBindings()
+        {
+            base.InstallBindings();
+
+            Container.
+               Bind<IUltimateCharacterController>().
+               FromInstance(this).
+               AsCached().
+               NonLazy();
+        }
+
         public virtual void Move(Vector3 direction)
         {
             if (canMove == false)
@@ -28,6 +39,7 @@ namespace TestTask.Game.Characters
 
         public void Attack()
         {
+            View.SetMoving(0);
             View.PlayClip("Attack");
         }
     }
