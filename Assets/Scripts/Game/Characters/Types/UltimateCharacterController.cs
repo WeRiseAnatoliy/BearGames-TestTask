@@ -5,13 +5,11 @@ namespace TestTask.Game.Characters
 {
     public class UltimateCharacterController : CharacterController, IUltimateCharacterController
     {
-        [SerializeField, FoldoutGroup("Physics")] bool useTwoDPhysics;
         [SerializeField, FoldoutGroup("Physics")] bool useMovementInterface;
+        [SerializeField, FoldoutGroup("Physics"), ShowIf(nameof(useMovementInterface))] bool useTwoDPhysics;
 
         [SerializeField, FoldoutGroup("Moving")] bool canMove = true;
         
-        public float SpeedMove = 5f;
-
         [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         public bool CanMove { get => canMove; set => canMove = value; }
         [FoldoutGroup("Moving")]

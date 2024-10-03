@@ -1,15 +1,19 @@
-﻿using MonsterLove.StateMachine;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace TestTask.Game.Characters
 {
-    public class AICharacterController : UltimateCharacterController
+    public class AICharacterController : TwoDUltimateCharacterController
     {
-        public StateMachine<AIBehaviourState> AIState;
-
         [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         private IAIBehaviourStrategy behaviour;
+
+        [ShowInInspector, FoldoutGroup("Navigation")]
+        public float AchievedRadius = 1f;
+
+        [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
+        public NavigationData? Navigation { get; private set; }
 
         public override void InstallBindings()
         {
@@ -21,7 +25,7 @@ namespace TestTask.Game.Characters
                 AsCached().
                 NonLazy();
 
-            if(TryGetComponent(out behaviour))
+            if (TryGetComponent(out behaviour))
             {
                 Container.
                     Bind<IAIBehaviourStrategy>().
@@ -35,26 +39,82 @@ namespace TestTask.Game.Characters
             }
         }
 
-        public override void Start()
-        {
-            base.Start();
-
-            AIState = new StateMachine<AIBehaviourState>(this);
-        }
-
         protected override void Live_Update()
         {
             base.Live_Update();
 
             behaviour?.LifeUpdate();
-        }
-    }
 
-    public enum AIBehaviourState
-    {
-        Patrol,
-        StayOnPatrolPoint,
-        Pursuit,
-        CooldownAfterLostTarget
+            HandleNavigation();
+        }
+
+        private void HandleNavigation()
+        {
+            if (Navigation == null)
+                return;
+
+            var distanceToTarget = Vector2.Distance(transform.position, Navigation.Value.ResultPosition);
+            if (distanceToTarget < AchievedRadius)
+            {
+                View.SetMoving(0);
+                Navigation.Value.Result?.Invoke(true);
+                Navigation = null;
+            }
+            else
+            {
+                View.SetMoving(Navigation.Value.EnableRun ? 2 : 1);
+                var navPoint = Navigation.Value.ResultPosition;
+                if (navPoint.x > transform.position.x)
+                    Move(Vector3.right);
+                else
+                    Move(Vector3.left);
+            }
+        }
+
+        public void MoveTo(NavigationData data)
+        {
+            if (Navigation != null)
+                Navigation.Value.Result?.Invoke(false);
+
+            Navigation = data;
+        }
+
+        public void ClearNavigation()
+        {
+            View.SetMoving(0);
+            Navigation = null;
+        }
+
+        public struct NavigationData
+        {
+            public Transform Target;
+            public Vector3 Point;
+
+            public Action<bool> Result;
+            public bool EnableRun;
+
+            public Vector3 ResultPosition =>
+                Target ? Target.position : Point;
+
+            public NavigationData(Transform target,
+                Action<bool> result,
+                bool enableRun = false)
+            {
+                Target = target;
+                Point = Vector3.zero;
+                Result = result;
+                EnableRun = enableRun;
+            }
+
+            public NavigationData(Vector3 point,
+                Action<bool> result,
+                bool enableRun = false)
+            {
+                Target = null;
+                Point = point;
+                Result = result;
+                EnableRun = enableRun;
+            }
+        }
     }
 }
