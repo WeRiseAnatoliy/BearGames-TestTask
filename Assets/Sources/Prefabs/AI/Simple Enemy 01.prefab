@@ -1381,6 +1381,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62180293b236f5b4db6300243063a6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IdleStayTimerRange: {x: 1, y: 3}
+  Patrol:
+    PathType: 2
+    TransformPath: []
+    VectorPath: []
+    Radius: 10
 --- !u!4 &5400222154760459165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8725850539710203878, guid: 9c17d8d53e5eec341b6356bd62754e62,

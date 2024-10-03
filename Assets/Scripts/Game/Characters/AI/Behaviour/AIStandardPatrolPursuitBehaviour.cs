@@ -85,6 +85,8 @@ namespace TestTask.Game.Characters
             private bool useRadius =>
                 PathType == PatrolPointType.RandomFromRadius_StartPos || PathType == PatrolPointType.RandomFromRadius_OriginPos;
 
+            private int lastUsedPathIndex;
+
             public Vector3 GetPointPos (AICharacterController ai, Vector3 aiStartPos)
             {
                 switch(PathType)
@@ -93,7 +95,16 @@ namespace TestTask.Game.Characters
                         return aiStartPos + Vector3.right * Random.Range(-Radius, Radius);
                     case PatrolPointType.RandomFromRadius_OriginPos:
                         return ai.transform.position + Vector3.right * Random.Range(-Radius, Radius);
-
+                    case PatrolPointType.TransformsPath:
+                        lastUsedPathIndex++;
+                        if (lastUsedPathIndex >= TransformPath.Length)
+                            lastUsedPathIndex = 0;
+                        return TransformPath[lastUsedPathIndex].position;
+                    case PatrolPointType.VectorsPath:
+                        lastUsedPathIndex++;
+                        if (lastUsedPathIndex >= VectorPath.Length)
+                            lastUsedPathIndex = 0;
+                        return aiStartPos + VectorPath[lastUsedPathIndex];
                     default:
                         return ai.transform.position;
                 }

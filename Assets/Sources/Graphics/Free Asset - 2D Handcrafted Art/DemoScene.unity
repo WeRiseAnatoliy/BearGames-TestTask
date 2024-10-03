@@ -26853,12 +26853,37 @@ PrefabInstance:
     - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
       propertyPath: Patrol.Radius
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
       propertyPath: Patrol.PathType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+        type: 3}
+      propertyPath: Patrol.VectorPath.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+        type: 3}
+      propertyPath: Patrol.VectorPath.Array.data[0].x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+        type: 3}
+      propertyPath: Patrol.VectorPath.Array.data[1].x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+        type: 3}
+      propertyPath: Patrol.VectorPath.Array.data[2].x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956062989534199298, guid: bdeac24b7cc972840bdc78616b923d73,
+        type: 3}
+      propertyPath: AchievedRadius
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
