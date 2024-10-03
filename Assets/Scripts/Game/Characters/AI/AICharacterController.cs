@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using System;
+using System.Buffers;
 using UnityEngine;
 using Zenject;
 
@@ -43,9 +44,19 @@ namespace TestTask.Game.Characters
             }
         }
 
+        protected override void Dead_Enter()
+        {
+            base.Dead_Enter();
+
+            ClearNavigation();
+        }
+
         protected override void Live_Update()
         {
             base.Live_Update();
+
+            if (Health.WasDead.Value)
+                return;
 
             if (View.IsCurrentPlay("Attack") == false &&
                 View.IsCurrentPlay("Hit") == false)
@@ -61,7 +72,7 @@ namespace TestTask.Game.Characters
             if (Navigation == null)
                 return;
 
-            var distanceToTarget = Mathf.Abs(Navigation.Value.ResultPosition.x - transform.position.x);
+            var distanceToTarget = Vector2.Distance(Navigation.Value.ResultPosition, View.Root.position);
             if (distanceToTarget < AchievedRadius)
             {
                 View.SetMoving(0);
@@ -103,7 +114,9 @@ namespace TestTask.Game.Characters
             public bool EnableRun;
 
             public Vector3 ResultPosition =>
-                Target ? Target.position : Point;
+                Target ? 
+                (Target.TryGetComponent<ICharacterController>(out var otherCharacter) ? otherCharacter.View.Root.position : Target.position) :
+                Point;
 
             public NavigationData(Transform target,
                 Action<bool> result,

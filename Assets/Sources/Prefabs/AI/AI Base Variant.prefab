@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29908624f546c9646a19c9e427ca6434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMovementInterface: 0
+  useTwoDPhysics: 0
   canMove: 1
   SpeedByMagnitude:
     serializedVersion: 2
@@ -125,3 +127,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AchievedRadius: 1

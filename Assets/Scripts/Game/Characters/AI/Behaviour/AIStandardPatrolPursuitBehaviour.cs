@@ -16,8 +16,8 @@ namespace TestTask.Game.Characters
             State != null ? State.State : StandardAIBehaviourStates.IdleStay;
 #endif
 
-        public Vector2 IdleStayTimerRange = new Vector2(1, 3);
-        public Vector2 TargetDetectedTimerRange = new Vector2(1, 3);
+        [MinMaxSlider(0, 30, showFields: true)] public Vector2 IdleStayTimerRange = new Vector2(1, 3);
+        [MinMaxSlider(0, 15, showFields: true)] public Vector2 TargetDetectedTimerRange = new Vector2(1, 3);
         public PatrolSettings Patrol;
 
         private Vector3 startPos;
@@ -39,13 +39,7 @@ namespace TestTask.Game.Characters
                 owner.Vision.VisibledCount > 0)
             {
                 State.ChangeState(StandardAIBehaviourStates.TargetVisibled);
-            } 
-            //else if(State.State == StandardAIBehaviourStates.Pursuit &&
-            //    owner.Navigation == null &&
-            //    owner.CanMove)
-            //{
-            //    Pursuit_Enter();
-            //}
+            }
         }
 
         #region Idle State
@@ -86,7 +80,6 @@ namespace TestTask.Game.Characters
 
             while (timerForDetect > 0)
             {
-                Debug.Log($"visibed wait");
                 if (owner.Vision.VisibledCount == 0)
                 {
                     State.ChangeState(StandardAIBehaviourStates.IdleStay);
@@ -180,7 +173,7 @@ namespace TestTask.Game.Characters
                     case PatrolPointType.RandomFromRadius_StartPos:
                         return aiStartPos + Vector3.right * Random.Range(-Radius, Radius);
                     case PatrolPointType.RandomFromRadius_OriginPos:
-                        return ai.transform.position + Vector3.right * Random.Range(-Radius, Radius);
+                        return ai.View.Root.position + Vector3.right * Random.Range(-Radius, Radius);
                     case PatrolPointType.TransformsPath:
                         lastUsedPathIndex++;
                         if (lastUsedPathIndex >= TransformPath.Length)
@@ -192,7 +185,7 @@ namespace TestTask.Game.Characters
                             lastUsedPathIndex = 0;
                         return aiStartPos + VectorPath[lastUsedPathIndex];
                     default:
-                        return ai.transform.position;
+                        return ai.View.Root.position;
                 }
             }
 
