@@ -1,11 +1,15 @@
 ﻿using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace TestTask.Game.Characters
 {
     public class AICharacterController : TwoDUltimateCharacterController
     {
+        [Inject, ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
+        public AIVision Vision { get; private set; }
+
         [ShowInInspector, ReadOnly, FoldoutGroup("Debug")]
         private IAIBehaviourStrategy behaviour;
 
@@ -43,9 +47,13 @@ namespace TestTask.Game.Characters
         {
             base.Live_Update();
 
-            behaviour?.LifeUpdate();
+            if (View.IsCurrentPlay("Attack") == false &&
+                View.IsCurrentPlay("Hit") == false)
+            {
+                behaviour?.LifeUpdate();
 
-            HandleNavigation();
+                HandleNavigation();
+            }
         }
 
         private void HandleNavigation()
@@ -53,7 +61,7 @@ namespace TestTask.Game.Characters
             if (Navigation == null)
                 return;
 
-            var distanceToTarget = Vector2.Distance(transform.position, Navigation.Value.ResultPosition);
+            var distanceToTarget = Mathf.Abs(Navigation.Value.ResultPosition.x - transform.position.x);
             if (distanceToTarget < AchievedRadius)
             {
                 View.SetMoving(0);
@@ -62,12 +70,13 @@ namespace TestTask.Game.Characters
             }
             else
             {
-                View.SetMoving(Navigation.Value.EnableRun ? 2 : 1);
+                var speedModifer = Navigation.Value.EnableRun ? 2 : 1;
+                View.SetMoving(speedModifer);
                 var navPoint = Navigation.Value.ResultPosition;
                 if (navPoint.x > transform.position.x)
-                    Move(Vector3.right);
+                    Move(Vector3.right * speedModifer);
                 else
-                    Move(Vector3.left);
+                    Move(Vector3.left * speedModifer);
             }
         }
 

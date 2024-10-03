@@ -1,6 +1,7 @@
 ﻿using MonsterLove.StateMachine;
 using Sirenix.OdinInspector;
 using System.Collections;
+using TestTask.Game.Vitals;
 using UnityEngine;
 
 namespace TestTask.Game.Characters
@@ -9,10 +10,18 @@ namespace TestTask.Game.Characters
     {
         public StateMachine<StandardAIBehaviourStates> State;
 
+#if UNITY_EDITOR
+        [ShowInInspector, ReadOnly]
+        public StandardAIBehaviourStates debugState =>
+            State != null ? State.State : StandardAIBehaviourStates.IdleStay;
+#endif
+
         public Vector2 IdleStayTimerRange = new Vector2(1, 3);
+        public Vector2 TargetDetectedTimerRange = new Vector2(1, 3);
         public PatrolSettings Patrol;
 
         private Vector3 startPos;
+        private GameObject target;
 
         private void Start()
         {
@@ -24,15 +33,23 @@ namespace TestTask.Game.Characters
         public override void LifeUpdate()
         {
             //The same problem into CharacterController, void Update
-            switch(State.State)
+
+            if (State.State != StandardAIBehaviourStates.Pursuit &&
+                State.State != StandardAIBehaviourStates.TargetVisibled &&
+                owner.Vision.VisibledCount > 0)
             {
-                case StandardAIBehaviourStates.IdleStay:
-                    IdleStay_Update();
-                    break;
-            }
+                State.ChangeState(StandardAIBehaviourStates.TargetVisibled);
+            } 
+            //else if(State.State == StandardAIBehaviourStates.Pursuit &&
+            //    owner.Navigation == null &&
+            //    owner.CanMove)
+            //{
+            //    Pursuit_Enter();
+            //}
         }
 
-        private IEnumerator IdleStay_Enter ()
+        #region Idle State
+        private IEnumerator IdleStay_Enter()
         {
             Debug.Log($"Idle stay begin");
             owner.ClearNavigation();
@@ -41,29 +58,98 @@ namespace TestTask.Game.Characters
             Debug.Log($"Idle stay end");
         }
 
-        private void IdleStay_Update ()
+        private void IdleStay_Update()
         {
             Debug.Log($"Strategy idle update");
         }
+        #endregion
 
-        private void Patrol_Enter ()
+        #region Patrol State
+        private void Patrol_Enter()
         {
             var point = Patrol.GetPointPos(owner, startPos);
             owner.MoveTo(new AICharacterController.NavigationData(point, OnPatrolPointAchieved));
         }
 
-        private void OnPatrolPointAchieved (bool success)
+        private void OnPatrolPointAchieved(bool success)
         {
             State.ChangeState(StandardAIBehaviourStates.IdleStay);
         }
+        #endregion
+
+        #region Target Visibled State
+        private IEnumerator TargetVisibled_Enter()
+        {
+            owner.ClearNavigation();
+
+            var timerForDetect = Random.Range(TargetDetectedTimerRange.x, TargetDetectedTimerRange.y);
+
+            while (timerForDetect > 0)
+            {
+                Debug.Log($"visibed wait");
+                if (owner.Vision.VisibledCount == 0)
+                {
+                    State.ChangeState(StandardAIBehaviourStates.IdleStay);
+                    break;
+                }
+
+                yield return new WaitForFixedUpdate();
+                timerForDetect -= Time.fixedDeltaTime;
+            }
+
+            if (timerForDetect <= 0 && owner.Vision.VisibledCount > 0)
+            {
+                target = owner.Vision.Visibled[0];
+                State.ChangeState(StandardAIBehaviourStates.Pursuit);
+            }
+        }
+        #endregion
+
+        #region Pursuit State
+        private void Pursuit_Enter()
+        {
+            owner.MoveTo(new AICharacterController.NavigationData(target.transform, OnPursuitResult, true));
+        }
+
+        private void OnPursuitResult(bool result)
+        {
+            if(target.TryGetComponent<IHealthController>(out var enemyHealth))
+            {
+                if (enemyHealth.WasDead.Value)
+                {
+                    target = null;
+                    State.ChangeState(StandardAIBehaviourStates.IdleStay);
+                    return;
+                }
+            }
+
+            if (result)
+            {
+                State.ChangeState(StandardAIBehaviourStates.Attack);
+            }
+            else
+            {
+                Pursuit_Enter();
+            }
+        }
+        #endregion
+
+        #region Attack State
+        private IEnumerator Attack_Enter ()
+        {
+            owner.Attack();
+            while (owner.View.IsCurrentPlay("Attack"))
+                yield return new WaitForFixedUpdate();
+            State.ChangeState(StandardAIBehaviourStates.Pursuit);
+        }
+        #endregion
 
         public enum StandardAIBehaviourStates
         {
             IdleStay,
             Patrol,
             TargetVisibled,
-            Pursuit,
-            TargetIntoAttackRange,
+            Pursuit, 
             Attack
         }
 

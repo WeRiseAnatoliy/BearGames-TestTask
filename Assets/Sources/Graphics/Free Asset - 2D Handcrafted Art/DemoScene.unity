@@ -5192,6 +5192,7 @@ GameObject:
   - component: {fileID: 510236665}
   - component: {fileID: 510236666}
   - component: {fileID: 510236667}
+  - component: {fileID: 510236668}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5275,7 +5276,7 @@ Transform:
   m_GameObject: {fileID: 510236660}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: -25}
+  m_LocalPosition: {x: 0, y: -0.14999998, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5361,6 +5362,26 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1818360608 &510236668
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510236660}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0.85, z: -25}
+  m_TranslationOffset: {x: 0, y: 0.85, z: -25}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1993447423}
+    weight: 1
 --- !u!1 &514112563
 GameObject:
   m_ObjectHideFlags: 0
@@ -25254,6 +25275,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4770864598100032372, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770864598100032372, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8189669107414641102, guid: 5096636f955255249b1a14d9fb49f997,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25303,6 +25334,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1993447420}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.Behaviour, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653242923292446869, guid: 5096636f955255249b1a14d9fb49f997,
+        type: 3}
+      propertyPath: OnDead.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8793017599362682038, guid: 5096636f955255249b1a14d9fb49f997,
         type: 3}
@@ -25354,6 +25425,12 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 1266902537}
     weight: 1
+--- !u!4 &1993447423 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5739080545739701325, guid: 5096636f955255249b1a14d9fb49f997,
+    type: 3}
+  m_PrefabInstance: {fileID: 1993447410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1994999845
 GameObject:
   m_ObjectHideFlags: 0
@@ -26803,7 +26880,7 @@ PrefabInstance:
     - target: {fileID: 5400222154760459165, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -19.41
       objectReference: {fileID: 0}
     - target: {fileID: 5400222154760459165, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
@@ -26850,40 +26927,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+    - target: {fileID: 8338686742634335901, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
-      propertyPath: Patrol.Radius
-      value: 4
+      propertyPath: Length
+      value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
+    - target: {fileID: 8338686742634335901, guid: bdeac24b7cc972840bdc78616b923d73,
         type: 3}
-      propertyPath: Patrol.PathType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
-        type: 3}
-      propertyPath: Patrol.VectorPath.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
-        type: 3}
-      propertyPath: Patrol.VectorPath.Array.data[0].x
+      propertyPath: Quality
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
-        type: 3}
-      propertyPath: Patrol.VectorPath.Array.data[1].x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6022206260744061392, guid: bdeac24b7cc972840bdc78616b923d73,
-        type: 3}
-      propertyPath: Patrol.VectorPath.Array.data[2].x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956062989534199298, guid: bdeac24b7cc972840bdc78616b923d73,
-        type: 3}
-      propertyPath: AchievedRadius
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

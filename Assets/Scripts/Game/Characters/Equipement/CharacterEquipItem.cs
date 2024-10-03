@@ -80,6 +80,9 @@ namespace TestTask.Game.Characters
 
         private void OnDrawGizmosSelected()
         {
+            if (rayOriginPoint == null)
+                return;
+
             var origin = rayOriginPoint ? rayOriginPoint.position : transform.position;
             var dir = (directionByRoot && character != null) ? character.View.Root.forward : rayOriginPoint.forward;
             Gizmos.color = Color.red;
